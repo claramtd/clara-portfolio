@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05 Report Data — Harbour Energy Indonesia</title>
+    <link rel="stylesheet" href="shared.css">
+</head>
+<body>
+<nav class="sidebar">
+    <div class="sidebar-logo"><img src="https://logotyp.us/file/harbour-energy.svg" alt="Harbour Energy" style="width:28px;height:auto;"> Harbour Energy</div>
+    <div class="sidebar-section" data-i18n="sidebar.portfolio">Portfolio</div>
+    <a href="index.html"><span class="icon">🏠</span> <span data-i18n="sidebar.index">Index</span></a>
+    <a href="01_konteks_bisnis.html"><span class="icon">📋</span> <span data-i18n="sidebar.konteks">Konteks Bisnis</span></a>
+    <a href="02_pertanyaan_bisnis.html"><span class="icon">❓</span> <span data-i18n="sidebar.pertanyaan">Pertanyaan Bisnis</span></a>
+    <a href="03_temuan_rekomendasi.html"><span class="icon">💡</span> <span data-i18n="sidebar.temuan">Temuan & Rekom</span></a>
+    <a href="04_visualisasi.html"><span class="icon">📊</span> <span data-i18n="sidebar.visualisasi">Visualisasi</span></a>
+    <div class="sidebar-section" data-i18n="sidebar.reports">Reports</div>
+    <a href="05_report_data.html" class="active"><span class="icon">📄</span> <span data-i18n="sidebar.data">Report Data</span></a>
+    <div class="sidebar-contact">
+        <div class="contact-label">Clara Agnatasia Matondang</div>
+        <a href="https://www.linkedin.com/in/claramatondang/" target="_blank"><svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</a>
+        <a href="mailto:claraagnatasiam@gmail.com"><svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg> Email</a>
+    </div>
+</nav>
+
+<div class="main">
+    <div class="topbar">
+        <h2 data-i18n="p05.topbar">Report Data</h2>
+        <span class="badge" data-i18n="p05.badge">Report · 05</span>
+        <button class="lang-toggle">EN</button>
+    </div>
+
+    <div class="hero-banner">
+        <img class="hero-logo" src="https://logotyp.us/file/harbour-energy.svg" alt="Harbour Energy">
+        <div>
+            <h1 data-i18n="p05.hero.title">Detail Data & Cleaning Log</h1>
+            <p data-i18n="p05.hero.sub">Appendix teknis untuk verifikasi angka</p>
+        </div>
+    </div>
+
+    <div class="content-area">
+
+        <h2 class="section-title">Data Cleaning Summary</h2>
+
+        <div class="kpi-row" style="grid-template-columns:repeat(3,1fr);">
+            <div class="kpi-card c-blue"><div class="kpi-num">3,670 → 3,614</div><div class="kpi-label">Production Rows</div><div class="kpi-sub">56 removed (69 anomalies, some overlap)</div></div>
+            <div class="kpi-card c-green"><div class="kpi-num">95 → 85</div><div class="kpi-label">Safety Rows</div><div class="kpi-sub">10 removed (duplicates + future dates)</div></div>
+            <div class="kpi-card c-yellow"><div class="kpi-num">298 → ~270</div><div class="kpi-label">Cost Rows</div><div class="kpi-sub">~28 removed/fixed</div></div>
+        </div>
+
+        <h3>Production Data — Cleaning Log</h3>
+        <table>
+            <thead><tr><th>Tipe Anomali</th><th>Jumlah</th><th>Treatment</th></tr></thead>
+            <tbody>
+            <tr><td>Missing values (kolom produksi kosong)</td><td>15</td><td>Hapus row — tidak bisa diestimasi tanpa data produksi</td></tr>
+            <tr><td>Negative production values</td><td>7</td><td>Konversi ke absolute value (data entry error — angka benar, tanda salah)</td></tr>
+            <tr><td>Duplicate rows (Date + WellID sama)</td><td>20</td><td>Hapus duplikat, keep first occurrence</td></tr>
+            <tr><td>Future dates (tahun 2026)</td><td>5</td><td>Hapus — di luar periode analisis 2025</td></tr>
+            <tr><td>Zero production pada well "Online"</td><td>10</td><td>Flag sebagai anomali. 6 terjadi saat turnaround (valid), 4 di luar turnaround (data entry error → hapus)</td></tr>
+            <tr><td>Format tanggal DD/MM/YYYY</td><td>12</td><td>Konversi ke YYYY-MM-DD (standardisasi)</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Safety Data — Cleaning Log</h3>
+        <table>
+            <thead><tr><th>Tipe Anomali</th><th>Jumlah</th><th>Treatment</th></tr></thead>
+            <tbody>
+            <tr><td>Missing values (Department/Severity kosong)</td><td>5</td><td>Isi Severity berdasarkan IncidentType mapping. Department yang kosong → "Unknown"</td></tr>
+            <tr><td>Duplicate rows (IncidentID sama)</td><td>8</td><td>Hapus duplikat, keep first</td></tr>
+            <tr><td>Inconsistent severity (tidak match incident type)</td><td>4</td><td>Koreksi berdasarkan mapping: Near Miss→Low, Medical Treatment→Medium, LTI→High, dll</td></tr>
+            <tr><td>Future dates (tahun 2026)</td><td>3</td><td>Hapus</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Cost Data — Cleaning Log</h3>
+        <table>
+            <thead><tr><th>Tipe Anomali</th><th>Jumlah</th><th>Treatment</th></tr></thead>
+            <tbody>
+            <tr><td>Missing amount values</td><td>8</td><td>Isi dengan Budget_USD value (best estimate)</td></tr>
+            <tr><td>Negative cost values</td><td>4</td><td>Pisahkan sebagai credit notes. Untuk analisis, gunakan absolute value</td></tr>
+            <tr><td>Duplicate rows</td><td>10</td><td>Hapus duplikat, keep first</td></tr>
+            <tr><td>Typo kategori</td><td>3</td><td>Personel→Personnel, Maintanance→Maintenance, Logistic→Logistics</td></tr>
+            </tbody>
+        </table>
+
+        <h2 class="section-title">Production Detail</h2>
+
+        <h3>Average Daily Production per Asset</h3>
+        <table>
+            <thead><tr><th>Asset</th><th>Avg Gross (boepd)</th><th>Avg Net (boepd)</th><th>WI</th><th>Avg Uptime (%)</th></tr></thead>
+            <tbody>
+            <tr><td>Block A</td><td>~13,000</td><td>~3,730</td><td>28.67%</td><td>~96% (excl turnaround)</td></tr>
+            <tr><td>Tuna</td><td>~800</td><td>~400</td><td>50.0%</td><td>~96%</td></tr>
+            <tr style="font-weight:700;"><td>Total</td><td>~13,800</td><td>~4,130</td><td>—</td><td>—</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Well Performance Ranking (by Avg Gross boepd)</h3>
+        <table>
+            <thead><tr><th>Rank</th><th>Well ID</th><th>Asset</th><th>Platform</th><th>Avg Gross (boepd)</th></tr></thead>
+            <tbody>
+            <tr><td>1</td><td>A-01</td><td>Block A</td><td>Alpha</td><td>~2,050</td></tr>
+            <tr><td>2</td><td>A-03</td><td>Block A</td><td>Alpha</td><td>~2,010</td></tr>
+            <tr><td>3</td><td>B-01</td><td>Block A</td><td>Bravo</td><td>~2,000</td></tr>
+            <tr><td>4</td><td>A-02</td><td>Block A</td><td>Alpha</td><td>~1,980</td></tr>
+            <tr><td>5</td><td>B-03</td><td>Block A</td><td>Bravo</td><td>~1,970</td></tr>
+            <tr><td>6</td><td>B-02</td><td>Block A</td><td>Bravo</td><td>~1,960</td></tr>
+            <tr><td>7</td><td>A-04</td><td>Block A</td><td>Alpha</td><td>~1,950</td></tr>
+            <tr><td>8</td><td>T-01</td><td>Tuna</td><td>Tuna-FPSO</td><td>~280</td></tr>
+            <tr><td>9</td><td>T-03</td><td>Tuna</td><td>Tuna-FPSO</td><td>~270</td></tr>
+            <tr><td>10</td><td>T-02</td><td>Tuna</td><td>Tuna-FPSO</td><td>~260</td></tr>
+            </tbody>
+        </table>
+
+        <h2 class="section-title">Safety Detail</h2>
+
+        <div class="formula-box">
+            <div class="explain">TRIR Formula</div>
+            <div class="formula">TRIR = (20 × 1,000,000) / 20,000,000 = <strong>1.0</strong></div>
+            <div class="explain">Recordable: Medical Treatment (10) + Restricted Work (4) + Lost Time Injury (6) = 20</div>
+        </div>
+
+        <h3>Incident Breakdown by Type</h3>
+        <table>
+            <thead><tr><th>Incident Type</th><th>Count</th><th>% of Total</th><th>Recordable?</th></tr></thead>
+            <tbody>
+            <tr><td>Near Miss</td><td>30</td><td>35%</td><td>❌</td></tr>
+            <tr><td>First Aid</td><td>16</td><td>19%</td><td>❌</td></tr>
+            <tr><td>Medical Treatment</td><td>10</td><td>12%</td><td>✅</td></tr>
+            <tr><td>Equipment Failure</td><td>7</td><td>8%</td><td>❌</td></tr>
+            <tr><td>Environmental Release</td><td>6</td><td>7%</td><td>❌</td></tr>
+            <tr><td>Lost Time Injury</td><td>6</td><td>7%</td><td>✅</td></tr>
+            <tr><td>Process Safety Event</td><td>6</td><td>7%</td><td>❌</td></tr>
+            <tr><td>Restricted Work</td><td>4</td><td>5%</td><td>✅</td></tr>
+            <tr style="font-weight:700;background:#f8fafc;"><td>Total</td><td>85</td><td>100%</td><td>20 recordable</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Incident Breakdown by Asset</h3>
+        <table>
+            <thead><tr><th>Asset</th><th>Count</th><th>% of Total</th></tr></thead>
+            <tbody>
+            <tr><td>Block A</td><td>50</td><td>59%</td></tr>
+            <tr><td>Tuna</td><td>23</td><td>27%</td></tr>
+            <tr><td>Andaman II</td><td>12</td><td>14%</td></tr>
+            </tbody>
+        </table>
+
+        <h2 class="section-title">Cost Detail</h2>
+
+        <h3>Unit OpEx per Asset</h3>
+        <table>
+            <thead><tr><th>Asset</th><th>Annual OpEx (USD)</th><th>Annual Production (boe)</th><th>Unit OpEx ($/boe)</th><th>vs Benchmark</th></tr></thead>
+            <tbody>
+            <tr><td>Block A</td><td>~$57.96M</td><td>~4,745,000</td><td>~$12.2</td><td><span class="badge-ch b-green">Below $12.8</span></td></tr>
+            <tr><td>Tuna</td><td>~$5.18M</td><td>~292,000</td><td>~$18.0</td><td><span class="badge-ch b-red">Above $12.8</span></td></tr>
+            </tbody>
+        </table>
+
+        <h3>Cost Breakdown by Category (Block A, Annual)</h3>
+        <table>
+            <thead><tr><th>Category</th><th>Annual Amount (USD)</th><th>% of Total</th><th>Budget Variance</th></tr></thead>
+            <tbody>
+            <tr><td>Personnel</td><td>~$17.4M</td><td>30%</td><td>Within ±5%</td></tr>
+            <tr><td>Maintenance</td><td>~$11.6M</td><td>20%</td><td><span class="badge-ch b-red">+25% (Juni turnaround)</span></td></tr>
+            <tr><td>Logistics</td><td>~$8.7M</td><td>15%</td><td>Within ±5%</td></tr>
+            <tr><td>Marine & Aviation</td><td>~$5.8M</td><td>10%</td><td>Within ±5%</td></tr>
+            <tr><td>Chemicals & Consumables</td><td>~$4.6M</td><td>8%</td><td>Within ±5%</td></tr>
+            <tr><td>Insurance</td><td>~$4.1M</td><td>7%</td><td>On budget</td></tr>
+            <tr><td>Utilities</td><td>~$2.9M</td><td>5%</td><td>On budget</td></tr>
+            <tr><td>Other</td><td>~$2.9M</td><td>5%</td><td>Within ±5%</td></tr>
+            <tr style="font-weight:700;background:#f8fafc;"><td>Total</td><td>~$57.96M</td><td>100%</td><td>YTD +3% vs budget</td></tr>
+            </tbody>
+        </table>
+
+        <div class="disclaimer">
+            <strong>⚠️ Disclaimer:</strong> Data operasional di-generate secara sintetis (random seed 42) untuk keperluan case study. Angka-angka di-anchor ke data publik Harbour Energy plc (LSE filings) tetapi tidak merepresentasikan data aktual perusahaan.
+        </div>
+
+    </div>
+</div>
+
+<script src="lang.js"></script>
+</body>
+</html>

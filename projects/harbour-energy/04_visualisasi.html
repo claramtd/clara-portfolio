@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04 Visualisasi — Harbour Energy Indonesia</title>
+    <link rel="stylesheet" href="shared.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<nav class="sidebar">
+    <div class="sidebar-logo"><img src="https://logotyp.us/file/harbour-energy.svg" alt="Harbour Energy" style="width:28px;height:auto;"> Harbour Energy</div>
+    <div class="sidebar-section" data-i18n="sidebar.portfolio">Portfolio</div>
+    <a href="index.html"><span class="icon">🏠</span> <span data-i18n="sidebar.index">Index</span></a>
+    <a href="01_konteks_bisnis.html"><span class="icon">📋</span> <span data-i18n="sidebar.konteks">Konteks Bisnis</span></a>
+    <a href="02_pertanyaan_bisnis.html"><span class="icon">❓</span> <span data-i18n="sidebar.pertanyaan">Pertanyaan Bisnis</span></a>
+    <a href="03_temuan_rekomendasi.html"><span class="icon">💡</span> <span data-i18n="sidebar.temuan">Temuan & Rekom</span></a>
+    <a href="04_visualisasi.html" class="active"><span class="icon">📊</span> <span data-i18n="sidebar.visualisasi">Visualisasi</span></a>
+    <div class="sidebar-section" data-i18n="sidebar.reports">Reports</div>
+    <a href="05_report_data.html"><span class="icon">📄</span> <span data-i18n="sidebar.data">Report Data</span></a>
+    <div class="sidebar-contact">
+        <div class="contact-label">Clara Agnatasia Matondang</div>
+        <a href="https://www.linkedin.com/in/claramatondang/" target="_blank"><svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn</a>
+        <a href="mailto:claraagnatasiam@gmail.com"><svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg> Email</a>
+    </div>
+</nav>
+
+<div class="main">
+    <div class="topbar">
+        <h2 data-i18n="p04.topbar">Visualisasi</h2>
+        <span class="badge" data-i18n="p04.badge">Portfolio · 04</span>
+        <button class="lang-toggle">EN</button>
+    </div>
+
+    <div class="hero-banner">
+        <img class="hero-logo" src="https://logotyp.us/file/harbour-energy.svg" alt="Harbour Energy">
+        <div>
+            <h1 data-i18n="p04.hero.title">Visualisasi Data Operasional</h1>
+            <p data-i18n="p04.hero.sub">Chart dari data bersih yang mendukung findings</p>
+        </div>
+    </div>
+
+    <div class="content-area">
+
+        <div class="kpi-row" style="grid-template-columns:repeat(4,1fr);">
+            <div class="kpi-card c-blue"><div class="kpi-num">~13,800</div><div class="kpi-label">Avg Gross (boepd)</div><div class="kpi-sub">Block A + Tuna</div></div>
+            <div class="kpi-card c-green"><div class="kpi-num">~4,130</div><div class="kpi-label">Avg Net (boepd)</div><div class="kpi-sub">Harbour share</div></div>
+            <div class="kpi-card c-yellow"><div class="kpi-num">1.0</div><div class="kpi-label">TRIR</div><div class="kpi-sub">per million hours</div></div>
+            <div class="kpi-card c-red"><div class="kpi-num">$12.2</div><div class="kpi-label">Unit OpEx</div><div class="kpi-sub">$/boe (Block A)</div></div>
+        </div>
+
+        <div class="two-col">
+            <div class="chart-card">
+                <div class="title">📈 Monthly Gross Production Trend (boepd)</div>
+                <canvas id="chartProdTrend"></canvas>
+                <div class="insight-box">Juni turun drastis ke ~8,200 boepd karena planned turnaround Block A (10–24 Juni). Monsoon months (Nov–Mar) juga sedikit lebih rendah (~5–10%).</div>
+            </div>
+            <div class="chart-card">
+                <div class="title">🏆 Well Performance Ranking — Avg Gross (boepd)</div>
+                <canvas id="chartWellRank"></canvas>
+                <div class="insight-box">Semua Block A wells relatif merata (~1,800–2,050 boepd). Tuna wells jauh lebih rendah (~250–280 boepd) karena masih development phase.</div>
+            </div>
+        </div>
+
+        <div class="two-col">
+            <div class="chart-card">
+                <div class="title">🦺 Safety Incidents by Type (85 total)</div>
+                <canvas id="chartIncidentType"></canvas>
+                <div class="insight-box">Near Miss mendominasi (35%). Recordable incidents (Medical Treatment + Restricted Work + Lost Time Injury) = 20 dari 85 total → TRIR = 1.0.</div>
+            </div>
+            <div class="chart-card">
+                <div class="title">💰 OpEx Breakdown by Category (Block A)</div>
+                <canvas id="chartCostBreakdown"></canvas>
+                <div class="insight-box">Personnel (30%) dan Maintenance (20%) adalah cost driver terbesar. Logistics (15%) punya ruang optimasi melalui konsolidasi dengan Tuna.</div>
+            </div>
+        </div>
+
+        <div class="two-col">
+            <div class="chart-card">
+                <div class="title">🏭 Incidents by Asset</div>
+                <canvas id="chartIncidentAsset"></canvas>
+                <div class="insight-box">Block A menyumbang 59% insiden — wajar karena aset paling aktif dengan jumlah personel terbanyak.</div>
+            </div>
+            <div class="chart-card">
+                <div class="title">📊 Unit OpEx Comparison ($/boe)</div>
+                <canvas id="chartUnitOpex"></canvas>
+                <div class="insight-box">Block A ($12.2/boe) di bawah benchmark global Harbour ($12.8/boe). Tuna ($18/boe) masih tinggi — tipikal untuk aset development phase.</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+// Data dari hasil cleaning & analisis (seed 42)
+
+new Chart(document.getElementById('chartProdTrend'), {
+    type: 'line',
+    data: {
+        labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+        datasets: [{
+            label: 'Block A Gross',
+            data: [13400, 13200, 13100, 13800, 14000, 8200, 14100, 13900, 13700, 14000, 13100, 12900],
+            borderColor: '#1a365d', backgroundColor: 'rgba(26,54,93,0.08)', fill: true, tension: 0.3
+        },{
+            label: 'Tuna Gross',
+            data: [790, 780, 760, 810, 820, 800, 830, 810, 790, 820, 770, 750],
+            borderColor: '#3b82f6', backgroundColor: 'rgba(59,130,246,0.08)', fill: true, tension: 0.3
+        }]
+    },
+    options: { responsive: true, plugins: { legend: { position: 'bottom' } }, scales: { y: { beginAtZero: false } } }
+});
+
+new Chart(document.getElementById('chartWellRank'), {
+    type: 'bar',
+    data: {
+        labels: ['A-01','A-03','B-01','A-02','B-03','B-02','A-04','T-01','T-03','T-02'],
+        datasets: [{
+            label: 'Avg Gross (boepd)',
+            data: [2050, 2010, 2000, 1980, 1970, 1960, 1950, 280, 270, 260],
+            backgroundColor: ['#1a365d','#1a365d','#1a365d','#1a365d','#1a365d','#1a365d','#1a365d','#3b82f6','#3b82f6','#3b82f6']
+        }]
+    },
+    options: { responsive: true, indexAxis: 'y', plugins: { legend: { display: false } } }
+});
+
+new Chart(document.getElementById('chartIncidentType'), {
+    type: 'doughnut',
+    data: {
+        labels: ['Near Miss (30)','First Aid (16)','Medical Treatment (10)','Equipment Failure (7)','Environmental (6)','Lost Time Injury (6)','Process Safety (6)','Restricted Work (4)'],
+        datasets: [{
+            data: [30, 16, 10, 7, 6, 6, 6, 4],
+            backgroundColor: ['#3b82f6','#22c55e','#ef4444','#f59e0b','#8b5cf6','#f97316','#14b8a6','#ec4899']
+        }]
+    },
+    options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } } }
+});
+
+new Chart(document.getElementById('chartCostBreakdown'), {
+    type: 'pie',
+    data: {
+        labels: ['Personnel 30%','Maintenance 20%','Logistics 15%','Marine & Aviation 10%','Chemicals 8%','Insurance 7%','Utilities 5%','Other 5%'],
+        datasets: [{
+            data: [30, 20, 15, 10, 8, 7, 5, 5],
+            backgroundColor: ['#1a365d','#2b6cb0','#3b82f6','#60a5fa','#93c5fd','#bfdbfe','#dbeafe','#eff6ff']
+        }]
+    },
+    options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } } }
+});
+
+new Chart(document.getElementById('chartIncidentAsset'), {
+    type: 'bar',
+    data: {
+        labels: ['Block A','Tuna','Andaman II'],
+        datasets: [{
+            label: 'Total Incidents',
+            data: [50, 23, 12],
+            backgroundColor: ['#1a365d','#3b82f6','#93c5fd']
+        }]
+    },
+    options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+});
+
+new Chart(document.getElementById('chartUnitOpex'), {
+    type: 'bar',
+    data: {
+        labels: ['Block A','Tuna','Benchmark (Global)'],
+        datasets: [{
+            label: '$/boe',
+            data: [12.2, 18.0, 12.8],
+            backgroundColor: ['#22c55e','#ef4444','#f59e0b']
+        }]
+    },
+    options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, title: { display: true, text: '$/boe' } } } }
+});
+</script>
+
+<script src="lang.js"></script>
+</body>
+</html>
